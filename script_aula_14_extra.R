@@ -17,7 +17,10 @@ attach(dados_aula14)
 # Padronizar as categorias SEXO_PROPRIETARIO para Masculino e Feminino
 # Atribuir legendas para a variável TIPO_VEICULO, sendo 1: Carro e 2: Moto
 # Criar uma nova variável em dados_aula14 F_IDADE categorizando as idades em: 22 a 34, 35 a 45
-
+dados_aula14$SEXO_PROPRIETARIO[dados_aula14$SEXO_PROPRIETARIO %in% c("masculino","MASCULINO")] = "Masculino"
+dados_aula14$SEXO_PROPRIETARIO[dados_aula14$SEXO_PROPRIETARIO %in% c("feminino","FEMININO")] = "Feminino"
+dados_aula14$TIPO_VEICULO = factor(dados_aula14$TIPO_VEICULO, levels=c(1,2), labels=c("Carro","Moto"))
+dados_aula14$F_IDADE = ifelse(dados_aula14$IDADE_PROPRIETARIO < 35,"22 a 34", "35 a 45")
 # Ao terminar a Tarefa 2 commit com a mensagem " script - tarefa 1 a 2" e envie para o repositório Aula_14_Extra
 
 
