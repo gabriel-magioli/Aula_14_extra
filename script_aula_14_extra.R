@@ -67,6 +67,132 @@ ifelse(dados_aula14$VALOR_VEICULO <= dados_aula14$VALOR_P90,"AIC","GIC")),NA)
 # TPIC: total de compradores com perfil PIC
 # TAIC: total de compradores com perfil AIC
 # TGIC: total de compradores com perfil GIC
+library(dplyr)
+BANCO_AULA14_RJ = dados_aula14 %>% group_by(MUNICIPIO) %>% summarise(ANO = 2025, NIVEL = "MUNICIPIO", CODIGO = first(MUNICIPIO),
+TVV = n(),
+TRVC = sum(
+  complete.cases(
+    IDADE_PROPRIETARIO,
+    SEXO_PROPRIETARIO,
+    TIPO_VEICULO,
+    VALOR_VEICULO,
+    PAM
+  )
+),
+TVVF = sum(SEXO_PROPRIETARIO == "Feminino", na.rm = TRUE),
+TVVM = sum(SEXO_PROPRIETARIO == "Masculino", na.rm = TRUE),
+TVCF = sum(
+  SEXO_PROPRIETARIO == "Feminino" &
+    TIPO_VEICULO == "Carro",
+  na.rm = TRUE
+),
+TVCM = sum(
+  SEXO_PROPRIETARIO == "Masculino" &
+    TIPO_VEICULO == "Carro",
+  na.rm = TRUE
+),
+TVMF = sum(
+  SEXO_PROPRIETARIO == "Feminino" &
+    TIPO_VEICULO == "Moto",
+  na.rm = TRUE
+),
+TVMM = sum(
+  SEXO_PROPRIETARIO == "Masculino" &
+    TIPO_VEICULO == "Moto",
+  na.rm = TRUE
+),
+TVC_22_34 = sum(
+  TIPO_VEICULO == "Carro" &
+    F_IDADE == "22 a 34",
+  na.rm = TRUE
+),
+TVC_35_45 = sum(
+  TIPO_VEICULO == "Carro" &
+    F_IDADE == "35 a 45",
+  na.rm = TRUE
+ )
+)
+
+
+IMVCF = mean(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Feminino" &
+      TIPO_VEICULO == "Carro"
+  ],
+  na.rm = TRUE
+)
+DPVCF = sd(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Feminino" &
+      TIPO_VEICULO == "Carro"
+  ],
+  na.rm = TRUE
+)
+IMVMM = mean(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Masculino" &
+      TIPO_VEICULO == "Moto"
+  ],
+  na.rm = TRUE
+)
+DPVMM = sd(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Masculino" &
+      TIPO_VEICULO == "Moto"
+  ],
+  na.rm = TRUE
+)
+IVCF_P25 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Feminino" &
+      TIPO_VEICULO == "Carro"
+  ],
+  0.25,
+  na.rm = TRUE
+)
+IVCF_P50 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Feminino" &
+      TIPO_VEICULO == "Carro"
+  ],
+  0.50,
+  na.rm = TRUE
+)
+IVCF_P75 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Feminino" &
+      TIPO_VEICULO == "Carro"
+  ],
+  0.75,
+  na.rm = TRUE
+)
+IVMM_P25 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Masculino" &
+      TIPO_VEICULO == "Moto"
+  ],
+  0.25,
+  na.rm = TRUE
+)
+IVMM_P50 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Masculino" &
+      TIPO_VEICULO == "Moto"
+  ],
+  0.50,
+  na.rm = TRUE
+)
+IVMM_P75 = quantile(
+  IDADE_PROPRIETARIO[
+    SEXO_PROPRIETARIO == "Masculino" &
+      TIPO_VEICULO == "Moto"
+  ],
+  0.75,
+  na.rm = TRUE
+)
+TPIC = sum("PAM" == "PIC", na.rm = TRUE)
+TAIC = sum("PAM" == "AIC", na.rm = TRUE)
+TGIC = sum("PAM" == "GIC", na.rm = TRUE)
 
 # Ao terminar a Tarefa 4 commit com a mensagem " script - tarefa 1 a 4" e envie para o repositório Aula_14_Extra
 
