@@ -3,7 +3,7 @@
 
 # Tarefa 1: Leitura do banco de dados banco 2 = SINASC.csv com o nome de dados_aula14
 # Ler o arquivo, verificar estrutura dos dados e dar uma olhada nos dados
-dados_aula14 = read.csv("banco 2 SINASC (1).csv",header = T, sep = ";")
+dados_aula14 = read.csv("banco 2 SINASC.csv",header = T, sep = ";")
 View(dados_aula14)
 dim(dados_aula14)
 str(dados_aula14)
@@ -28,7 +28,12 @@ dados_aula14$F_IDADE = ifelse(dados_aula14$IDADE_PROPRIETARIO < 35,"22 a 34", "3
 # agregar ao banco dados_aula14 as informações de VALOR_P10 e VALOR_P90
 # criar a variável PAM (somente quando TIPO_VEICULO = "Carro"), de acordo com IDADE_PROPRIETARIO e SEXO_PROPRIETARIO, com as seguintes categorias:
 # PAM = "PIC", se VALOR_VEICULO < VALOR_P10; "AIC", se VALOR_P10 <= VALOR_VEICULO <= VALOR_P90; "GIC", se VALOR_VEICULO > VALOR_P90
-
+tabela_pam = read.csv("Tabela_PAM.csv",header = T, sep = ";")
+View(tabela_pam)
+dados_aula14 = merge(dados_aula14, tabela_pam, by =c ("IDADE_PROPRIETARIO","SEXO_PROPRIETARIO"),all.x = T)
+dados_aula14$PAM = ifelse(dados_aula14$TIPO_VEICULO == "Carro", 
+ifelse(dados_aula14$VALOR_VEICULO < dados_aula14$VALOR_P10,"PIC",
+ifelse(dados_aula14$VALOR_VEICULO <= dados_aula14$VALOR_P90,"AIC","GIC")),NA)
 # Ao terminar a Tarefa 3 commit com a mensagem " script - tarefa 1 a 3" e envie para o repositório Aula_14_Extra
 
  
